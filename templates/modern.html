@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Resume</title>
+    <style>
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #5c6bc0;
+            --accent-color: #ff4081;
+            --text-color: #333;
+            --light-gray: #f5f5f5;
+            --dark-gray: #424242;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: var(--text-color);
+        }
+
+        .resume-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+
+        .sidebar {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem;
+        }
+
+        .main-content {
+            padding: 2rem;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: block;
+            border: 3px solid white;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .contact-info {
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .contact-item i {
+            margin-right: 0.8rem;
+            color: var(--accent-color);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .skill-bar {
+            background-color: var(--light-gray);
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .skill-progress {
+            background-color: var(--accent-color);
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+        }
+
+        .timeline-date {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-subtitle {
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .resume-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                order: 2;
+            }
+
+            .main-content {
+                order: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="resume-container">
+        <div class="sidebar">
+            <img src="profile-placeholder.jpg" alt="Profile" class="profile-image">
+            <h1 id="name">Your Name</h1>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i>📧</i>
+                    <span id="email">email@example.com</span>
+                </div>
+                <div class="contact-item">
+                    <i>📱</i>
+                    <span id="phone">(123) 456-7890</span>
+                </div>
+                <div class="contact-item">
+                    <i>📍</i>
+                    <span id="location">City, State</span>
+                </div>
+            </div>
+
+            <h2 class="section-title">Skills</h2>
+            <div class="skills">
+                <div class="skill">
+                    <div class="skill-name">Skill 1</div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 90%"></div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <div class="skill-name">Skill 2</div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 80%"></div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <div class="skill-name">Skill 3</div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 70%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <section id="experience">
+                <h2 class="section-title">Work Experience</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">Start Date - End Date</div>
+                        <div class="timeline-title">Job Title</div>
+                        <div class="timeline-subtitle">Company Name</div>
+                        <ul>
+                            <li>Key achievement or responsibility</li>
+                            <li>Another key achievement or responsibility</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="education">
+                <h2 class="section-title">Education</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">Graduation Date</div>
+                        <div class="timeline-title">University Name</div>
+                        <div class="timeline-subtitle">Degree in Field of Study</div>
+                        <p>GPA: X.XX</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="projects">
+                <h2 class="section-title">Projects</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">Date</div>
+                        <div class="timeline-title">Project Name</div>
+                        <p>Project description and key achievements</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html> 

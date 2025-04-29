@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalist Resume</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --text-color: #333;
+            --light-gray: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        section {
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--light-gray);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .item {
+            margin-bottom: 1.5rem;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-title {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .item-date {
+            color: var(--secondary-color);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background-color: var(--light-gray);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+
+            .item-header {
+                flex-direction: column;
+            }
+
+            .item-date {
+                margin-top: 0.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 id="name">Your Name</h1>
+        <div class="contact-info">
+            <span id="email">email@example.com</span> | 
+            <span id="phone">(123) 456-7890</span> | 
+            <span id="location">City, State</span>
+        </div>
+    </header>
+
+    <section id="education">
+        <h2>Education</h2>
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">University Name</span>
+                <span class="item-date">Graduation Date</span>
+            </div>
+            <div class="item-details">
+                <p>Degree in Field of Study</p>
+                <p>GPA: X.XX</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2>Work Experience</h2>
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">Job Title</span>
+                <span class="item-date">Start Date - End Date</span>
+            </div>
+            <div class="item-details">
+                <p>Company Name</p>
+                <ul>
+                    <li>Key achievement or responsibility</li>
+                    <li>Another key achievement or responsibility</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2>Skills</h2>
+        <div class="skills-list">
+            <span class="skill-tag">Skill 1</span>
+            <span class="skill-tag">Skill 2</span>
+            <span class="skill-tag">Skill 3</span>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">Project Name</span>
+                <span class="item-date">Date</span>
+            </div>
+            <div class="item-details">
+                <p>Project description and key achievements</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html> 

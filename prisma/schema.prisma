@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Website {
+  id         String   @id @default(cuid())
+  domain     String   @unique
+  html       String
+  template   String
+  isActive   Boolean  @default(true)
+  deployedAt DateTime @default(now())
+  expiresAt  DateTime
+  updatedAt  DateTime @updatedAt
+  Domain     Domain[]
+}
+
+model Domain {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  expiresAt DateTime
+  isActive  Boolean  @default(true)
+  website   Website  @relation(fields: [websiteId], references: [id])
+  websiteId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([name])
+  @@index([expiresAt])
+  @@index([isActive])
+} 
