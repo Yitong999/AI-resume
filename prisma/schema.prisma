@@ -10,12 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String     @id @default(cuid())
-  email     String     @unique
-  websites  Website[]  @relation("UserWebsites")
-}
-
 model Website {
   id         String   @id @default(cuid())
   domain     String   @unique
@@ -26,8 +20,6 @@ model Website {
   expiresAt  DateTime
   updatedAt  DateTime @updatedAt
   Domain     Domain[]
-  userId     String
-  user       User     @relation("UserWebsites", fields: [userId], references: [id])
 }
 
 model Domain {
