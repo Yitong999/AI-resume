@@ -1,0 +1,35 @@
+{
+    "basic_info": {
+      "name": "Rosie Wang",
+      "email": "rosiewang@example.com",
+      "phone": "+1 123-456-7890",
+      "linkedin": "https://linkedin.com/in/rosiewang",
+      "github": "https://github.com/Rosie-Wang",
+      "website": "https://rosiewang.com",
+      "location": "New York, NY, USA"
+    },
+    "education": [
+      {
+        "school": "Columbia University",
+        "degree": "MSc",
+        "major": "Electrical Engineering",
+        "start_date": "2024-09",
+        "end_date": "2025-12",
+        "gpa": "4.0/4.0"
+      }
+    ],
+    "skills": {
+      "programming_languages": ["Python", "C++", "JavaScript"],
+      "tools": ["Docker", "Linux", "Git"]
+    },
+    "projects": [
+      {
+        "name": "AI Resume Generator",
+        "description": "Creates resumes from JSON using Vercel hosting.",
+        "technologies": ["Next.js", "OpenAI", "Prisma"],
+        "highlight": "Auto-deploys pages on custom subpaths",
+        "link": "https://github.com/Rosie-Wang"
+      }
+    ]
+  }
+  
