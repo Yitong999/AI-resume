@@ -105,65 +105,60 @@
 </head>
 <body>
     <header>
-        <h1 id="name">Your Name</h1>
+        <h1 id="name">{{basic_info.name}}</h1>
         <div class="contact-info">
-            <span id="email">email@example.com</span> | 
-            <span id="phone">(123) 456-7890</span> | 
-            <span id="location">City, State</span>
+            <span id="email">{{basic_info.email}}</span> |
+            <span id="phone">{{basic_info.phone}}</span> |
+            <span id="location">{{basic_info.location}}</span><br>
+            <span id="linkedin">{{basic_info.linkedin}}</span> |
+            <span id="github">{{basic_info.github}}</span>
         </div>
     </header>
 
     <section id="education">
         <h2>Education</h2>
+        {{#each education}}
         <div class="item">
             <div class="item-header">
-                <span class="item-title">University Name</span>
-                <span class="item-date">Graduation Date</span>
+                <span class="item-title">{{school}} – {{degree}} in {{major}}</span>
+                <span class="item-date">{{start_date}} – {{end_date}}</span>
             </div>
             <div class="item-details">
-                <p>Degree in Field of Study</p>
-                <p>GPA: X.XX</p>
+                {{#if gpa}}
+                    <p>GPA: {{gpa}}</p>
+                {{/if}}
             </div>
         </div>
+        {{/each}}
     </section>
 
     <section id="experience">
         <h2>Work Experience</h2>
+        {{#each experience}}
         <div class="item">
             <div class="item-header">
-                <span class="item-title">Job Title</span>
-                <span class="item-date">Start Date - End Date</span>
+                <span class="item-title">{{company}} – {{position}}</span>
+                <span class="item-date">{{start_date}} – {{end_date}}</span>
             </div>
             <div class="item-details">
-                <p>Company Name</p>
                 <ul>
-                    <li>Key achievement or responsibility</li>
-                    <li>Another key achievement or responsibility</li>
+                    {{#each responsibilities}}
+                    <li>{{this}}</li>
+                    {{/each}}
                 </ul>
             </div>
         </div>
+        {{/each}}
     </section>
 
     <section id="skills">
         <h2>Skills</h2>
         <div class="skills-list">
-            <span class="skill-tag">Skill 1</span>
-            <span class="skill-tag">Skill 2</span>
-            <span class="skill-tag">Skill 3</span>
-        </div>
-    </section>
-
-    <section id="projects">
-        <h2>Projects</h2>
-        <div class="item">
-            <div class="item-header">
-                <span class="item-title">Project Name</span>
-                <span class="item-date">Date</span>
-            </div>
-            <div class="item-details">
-                <p>Project description and key achievements</p>
-            </div>
+            {{#each skills}}
+            <span class="skill-tag">{{this}}</span>
+            {{/each}}
         </div>
     </section>
 </body>
-</html> 
+</html>
+

@@ -12,7 +12,7 @@ import { WebsitePreview } from "@/components/website-preview"
 export default function CreatePage() {
   const [step, setStep] = useState(1)
   const [resumeFile, setResumeFile] = useState<File | null>(null)
-  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null)
+  const [selectedStyle, setSelectedStyle] = useState<'minimalist' | 'modern'>('modern')
   const [domain, setDomain] = useState("")
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
 
@@ -20,8 +20,8 @@ export default function CreatePage() {
     setResumeFile(file)
   }
 
-  const handleTemplateSelect = (templateId: string) => {
-    setSelectedTemplate(templateId)
+  const handleStyleSelect = (style: 'minimalist' | 'modern') => {
+    setSelectedStyle(style)
   }
 
   const handleDomainChange = (value: string) => {
@@ -113,13 +113,13 @@ export default function CreatePage() {
                       <h2 className="text-2xl font-bold">Choose Website Style</h2>
                       <p className="text-gray-500">Select a style that suits your professional needs</p>
                     </div>
-                    <TemplateSelector onSelect={handleTemplateSelect} />
+                    <TemplateSelector onSelect={handleStyleSelect} />
                     <div className="flex justify-between">
                       <Button variant="outline" onClick={prevStep}>
                         <ArrowLeft className="mr-2 h-4 w-4" />
                         Previous Step
                       </Button>
-                      <Button onClick={nextStep} disabled={!selectedTemplate}>
+                      <Button onClick={nextStep}>
                         Next Step
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
@@ -135,7 +135,7 @@ export default function CreatePage() {
                     </div>
                     <WebsitePreview 
                       resumeFile={resumeFile}
-                      selectedTemplate={selectedTemplate}
+                      selectedStyle={selectedStyle}
                       onPreviewGenerated={handlePreviewGenerated}
                     />
                     {previewUrl && (
@@ -196,15 +196,9 @@ export default function CreatePage() {
                           <p className="text-gray-500">{resumeFile?.name}</p>
                         </div>
                         <div>
-                          <h3 className="font-semibold">Template</h3>
-                          <p className="text-gray-500">
-                            {selectedTemplate === "1" ? "Minimalist" : selectedTemplate === "2" ? "Creative" : "Business"}
-                          </p>
+                          <h3 className="font-semibold">Style</h3>
+                          <p className="text-gray-500">{selectedStyle}</p>
                         </div>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold">Domain</h3>
-                        <p className="text-gray-500">{domain}.vercel.app</p>
                       </div>
                     </div>
 
@@ -213,8 +207,9 @@ export default function CreatePage() {
                         <ArrowLeft className="mr-2 h-4 w-4" />
                         Previous Step
                       </Button>
-                      <Button asChild>
-                        <Link href="/create/deploy">Deploy Now</Link>
+                      <Button onClick={nextStep} disabled={!domain}>
+                        Deploy Website
+                        <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </div>
                   </div>

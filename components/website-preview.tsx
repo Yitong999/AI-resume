@@ -2,161 +2,104 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import { Loader2 } from "lucide-react"
 
 interface WebsitePreviewProps {
   resumeFile: File | null
-  selectedTemplate: string | null
+  selectedStyle: 'minimalist' | 'modern'
   onPreviewGenerated: (previewUrl: string) => void
 }
 
-export function WebsitePreview({ resumeFile, selectedTemplate, onPreviewGenerated }: WebsitePreviewProps) {
+export function WebsitePreview({ resumeFile, selectedStyle, onPreviewGenerated }: WebsitePreviewProps) {
   const [isGenerating, setIsGenerating] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [previewContent, setPreviewContent] = useState<string | null>(null)
 
   const handleGeneratePreview = async () => {
-    if (!resumeFile || !selectedTemplate) return
+    if (!resumeFile) {
+      setError('Please upload a resume first')
+      return
+    }
 
     setIsGenerating(true)
     setError(null)
 
     try {
-      // Read the resume file content
-      const resumeContent = await resumeFile.text()
+      // Step 1: Parse the resume
+      const formData = new FormData()
+      formData.append('file', resumeFile)
 
-      console.log('Sending request with:', {
-        resumeContent: resumeContent.slice(0, 100) + '...', // Log first 100 chars
-        templateStyle: selectedTemplate
-      });
+      const parseResponse = await fetch('/api/parse-resume', {
+        method: 'POST',
+        body: formData,
+      })
 
-      // Call the website generation API
-      const response = await fetch('/api/generate-website', {
+      if (!parseResponse.ok) {
+        throw new Error('Failed to parse resume')
+      }
+
+      const resumeData = await parseResponse.json()
+
+      // Step 2: Generate the website
+      const generateResponse = await fetch('/api/generate-resume', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          resumeContent,
-          templateStyle: selectedTemplate,
+          // resumeData,
+          // style: selectedStyle,
+
+          resumeData: resumeData,
+          style: selectedStyle,
+
         }),
       })
 
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to generate website preview')
+      if (!generateResponse.ok) {
+        throw new Error('Failed to generate website')
       }
 
-      if (!data.website) {
-        throw new Error('No website content received from server')
-      }
+      const { html } = await generateResponse.json()
 
-      // Add necessary styles and scripts for preview
-      const enhancedWebsite = `
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <style>
-              /* Reset default styles */
-              * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-              }
-              
-              /* Ensure preview fits container */
-              html, body {
-                width: 100%;
-                height: 100%;
-                overflow-x: hidden;
-              }
-            </style>
-          </head>
-          <body>
-            ${data.website}
-            <script>
-              // Add any necessary preview scripts here
-              document.addEventListener('DOMContentLoaded', function() {
-                // Ensure all links open in new tab
-                document.querySelectorAll('a').forEach(link => {
-                  link.setAttribute('target', '_blank');
-                  link.setAttribute('rel', 'noopener noreferrer');
-                });
-              });
-            </script>
-          </body>
-        </html>
-      `
+      // Create a Blob URL for the preview
+      const blob = new Blob([html], { type: 'text/html' })
+      const previewUrl = URL.createObjectURL(blob)
 
-      console.log('Website generated successfully');
-      setPreviewContent(enhancedWebsite)
-
-      // Create a preview URL
-      const previewUrl = URL.createObjectURL(
-        new Blob([enhancedWebsite], { type: 'text/html' })
-      )
       onPreviewGenerated(previewUrl)
-    } catch (error) {
-      console.error('Error generating preview:', error)
-      setError(error instanceof Error ? error.message : 'Failed to generate preview. Please try again.')
+    } catch (err) {
+      console.error('Error generating preview:', err)
+      setError(err instanceof Error ? err.message : 'Failed to generate preview')
     } finally {
       setIsGenerating(false)
     }
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-medium">Website Preview</h3>
-        <Button 
-          onClick={handleGeneratePreview} 
-          disabled={isGenerating || !resumeFile || !selectedTemplate}
-        >
-          {isGenerating ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Generating...
-            </>
-          ) : (
-            'Generate Preview'
-          )}
-        </Button>
-      </div>
-
-      {error && (
-        <div className="text-sm text-red-500">
-          {error}
-        </div>
-      )}
-
-      <Card>
-        <CardContent className="p-4">
-          <div className="aspect-video bg-muted rounded-lg overflow-hidden">
+    <Card className="p-6">
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold">Preview</h2>
+          <Button
+            onClick={handleGeneratePreview}
+            disabled={isGenerating || !resumeFile}
+          >
             {isGenerating ? (
-              <div className="flex flex-col items-center justify-center h-full">
-                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-                <p className="mt-2 text-sm text-muted-foreground">Generating your website preview...</p>
-                <p className="text-xs text-muted-foreground mt-1">This may take a few moments</p>
-              </div>
-            ) : previewContent ? (
-              <iframe 
-                srcDoc={previewContent}
-                className="w-full h-full border-0"
-                title="Website Preview"
-                sandbox="allow-scripts allow-same-origin"
-              />
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Generating...
+              </>
             ) : (
-              <div className="flex flex-col items-center justify-center h-full">
-                <p className="text-sm text-muted-foreground">Click "Generate Preview" to see your website</p>
-              </div>
+              'Generate Preview'
             )}
+          </Button>
+        </div>
+        {error && (
+          <div className="rounded-md bg-red-50 p-4 text-red-600">
+            {error}
           </div>
-        </CardContent>
-      </Card>
-    </div>
+        )}
+      </div>
+    </Card>
   )
 } 
