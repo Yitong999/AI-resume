@@ -22,9 +22,6 @@ export default function Home() {
               <Button asChild>
                 <Link href="/create">Get Started</Link>
               </Button>
-              <Button asChild variant="outline">
-              <Link href="/login">Log In</Link>
-              </Button>
             </nav>
           </div>
         </header>
